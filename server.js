@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import "dotenv/config";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -48,7 +49,7 @@ async function groqChatCompletions({ apiKey, model, messages, temperature = 0.3,
 
 app.post("/api/transcribe", upload.single("audio"), async (req, res, next) => {
   try {
-    const apiKey = req.header("x-groq-api-key");
+    const apiKey = req.header("x-groq-api-key") || process.env.GROQ_API_KEY;
     required(apiKey, "Missing Groq API key.");
     required(req.file, "Missing audio file.");
 
@@ -87,7 +88,7 @@ app.post("/api/transcribe", upload.single("audio"), async (req, res, next) => {
 
 app.post("/api/suggestions", async (req, res, next) => {
   try {
-    const apiKey = req.header("x-groq-api-key");
+    const apiKey = req.header("x-groq-api-key") || process.env.GROQ_API_KEY;
     required(apiKey, "Missing Groq API key.");
 
     const {
@@ -175,7 +176,7 @@ Rules:
 
 app.post("/api/chat", async (req, res, next) => {
   try {
-    const apiKey = req.header("x-groq-api-key");
+    const apiKey = req.header("x-groq-api-key") || process.env.GROQ_API_KEY;
     required(apiKey, "Missing Groq API key.");
 
     const {
