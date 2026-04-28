@@ -99,9 +99,7 @@ function collectSettingsFromUI() {
 }
 
 function assertApiKey() {
-  if (!state.settings.groqApiKey?.trim()) {
-    throw new Error("Add your Groq API key in Settings first.");
-  }
+  return true;
 }
 
 async function postJSON(url, payload) {
