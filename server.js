@@ -49,7 +49,8 @@ async function groqChatCompletions({ apiKey, model, messages, temperature = 0.3,
 
 app.post("/api/transcribe", upload.single("audio"), async (req, res, next) => {
   try {
-    const apiKey = req.header("x-groq-api-key") || process.env.GROQ_API_KEY;
+    const headerKey = (req.header("x-groq-api-key") || "").trim();
+    const apiKey = headerKey || process.env.GROQ_API_KEY;
     required(apiKey, "Missing Groq API key.");
     required(req.file, "Missing audio file.");
 
